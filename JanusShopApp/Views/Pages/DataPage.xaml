@@ -1,0 +1,85 @@
+<Page
+    x:Class="JanusShopApp.Views.Pages.DataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:JanusShopApp.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:helpers="clr-namespace:JanusShopApp.Helpers"
+    Title="DataPage"
+    d:DataContext="{d:DesignInstance local:DataPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    ScrollViewer.CanContentScroll="False"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <helpers:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
+    </Page.Resources>
+    <Grid>
+        <ui:LoadingScreen 
+            Visibility="{Binding ViewModel.IsReady, Converter={StaticResource InverseBoolToVis}}" />
+        <Grid Visibility="{Binding ViewModel.IsReady, Converter={StaticResource BoolToVis}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+            <ui:AutoSuggestBox
+                x:Name="AutoSuggestBox"
+                Icon="{ui:SymbolIcon Search24}"
+                PlaceholderText="Search..."
+                IsEnabled="{Binding ViewModel.IsReady}"
+                OriginalItemsSource="{Binding ViewModel.SearchNames, Mode=OneWay}">
+                <ui:AutoSuggestBox.ItemTemplate>
+                    <DataTemplate>
+                        <ui:TextBlock Text="{Binding}"
+                                      HorizontalAlignment="Left"
+                                      Width="{Binding ElementName=AutoSuggestBox, Path=ActualWidth}" />
+                    </DataTemplate>
+                </ui:AutoSuggestBox.ItemTemplate>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="QuerySubmitted">
+                        <b:InvokeCommandAction Command="{Binding ViewModel.SearchCommand}"
+                                               CommandParameter="{Binding ElementName=AutoSuggestBox, Path=Text}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ui:AutoSuggestBox>
+            <ui:DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                         MaxWidth="2560"
+                         MaxHeight="1600"
+                         EnableColumnVirtualization="True"
+                         EnableRowVirtualization="True"
+                         ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}">
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Code" Binding="{Binding Code}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Name"
+                                        MaxWidth="600"
+                                        Binding="{Binding Name_est}" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Price" Binding="{Binding RoundedNetoPrice}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="SPrice" Binding="{Binding RoundedSpecialNetoPrice}" IsReadOnly="True" />
+                    <DataGridTemplateColumn Header="Link">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ui:HyperlinkButton Icon="{ui:SymbolIcon ShoppingBagArrowLeft24}"
+                                                    Content="Poodi"
+                                                    NavigateUri="{Binding Link}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
+        </Grid>
+    </Grid>
+</Page>
