@@ -5,9 +5,9 @@
 
 using JanusShopApp.Services;
 using JanusShopApp.ViewModels.Pages;
-using JanusShopApp.ViewModels.Windows;
+using JanusShopApp.ViewModels.Shells;
 using JanusShopApp.Views.Pages;
-using JanusShopApp.Views.Windows;
+using JanusShopApp.Views.Shells;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

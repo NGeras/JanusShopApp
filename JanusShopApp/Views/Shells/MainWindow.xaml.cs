@@ -3,11 +3,11 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
-using JanusShopApp.ViewModels.Windows;
+using JanusShopApp.ViewModels.Shells;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace JanusShopApp.Views.Windows
+namespace JanusShopApp.Views.Shells
 {
     public partial class MainWindow
     {

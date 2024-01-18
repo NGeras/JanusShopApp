@@ -57,32 +57,6 @@ public class Product {
     {
         return $"{Code} {Name_est} {Type}";
     }
-    public decimal RoundedNetoPrice
-    {
-        get
-        {
-            // Convert the original string price to decimal for rounding
-            if (decimal.TryParse(Price_neto, out decimal neto))
-            {
-                // Round to desired decimal places
-                return Math.Round(neto, 2);
-            }
-            return 0; // Default value if parsing fails
-        }
-    }
-    public decimal RoundedSpecialNetoPrice
-    {
-        get
-        {
-            // Convert the original string price to decimal for rounding
-            if (decimal.TryParse(Special_price_neto, out decimal neto))
-            {
-                // Round to desired decimal places
-                return Math.Round(neto, 2);
-            }
-            return 0; // Default value if parsing fails
-        }
-    }
 
     [XmlRoot(ElementName = "root")]
     public class Root

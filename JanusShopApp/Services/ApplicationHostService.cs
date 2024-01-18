@@ -4,7 +4,7 @@
 // All Rights Reserved.
 
 using JanusShopApp.Views.Pages;
-using JanusShopApp.Views.Windows;
+using JanusShopApp.Views.Shells;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -62,7 +62,7 @@ namespace JanusShopApp.Services
                 return;
             }
 
-            navigationWindow.NavigationView.Navigate(typeof(DashboardPage));
+            navigationWindow.NavigationView.Navigate(typeof(DataPage));
         }
     }
 }

@@ -3,8 +3,8 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using Windows.ApplicationModel;
 using Wpf.Ui.Controls;
-
 namespace JanusShopApp.ViewModels.Pages
 {
     public partial class SettingsViewModel : ObservableObject, INavigationAware
@@ -28,15 +28,28 @@ namespace JanusShopApp.ViewModels.Pages
         private void InitializeViewModel()
         {
             CurrentTheme = Wpf.Ui.Appearance.ApplicationThemeManager.GetAppTheme();
-            AppVersion = $"JanusShopApp - {GetAssemblyVersion()}";
+            AppVersion = $"Shop Aggregator - {GetAssemblyVersion()}";
 
             _isInitialized = true;
         }
 
         private string GetAssemblyVersion()
         {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
-                ?? String.Empty;
+            try
+            {
+                var version = Package.Current.Id.Version;
+                return string.Format("{0}.{1}.{2}.{3}",
+                    version.Major,
+                    version.Minor,
+                    version.Build,
+                    version.Revision);
+
+            }
+            catch (InvalidOperationException e)
+            {
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
+                     ?? String.Empty;
+            }
         }
 
         [RelayCommand]

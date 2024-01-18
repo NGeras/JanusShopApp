@@ -1,9 +1,9 @@
 ﻿<ui:FluentWindow
-    x:Class="JanusShopApp.Views.Windows.MainWindow"
+    x:Class="JanusShopApp.Views.Shells.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:JanusShopApp.Views.Windows"
+    xmlns:local="clr-namespace:JanusShopApp.Views.Shells"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
@@ -19,14 +19,14 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
-    WindowStartupLocation="CenterScreen"
+    WindowStartupLocation="CenterScreen" WindowState="Maximized"
     mc:Ignorable="d">
-    <ui:FluentWindow.InputBindings>
-        <KeyBinding
-            Key="F"
-            Command="{Binding ElementName=AutoSuggestBox, Path=FocusCommand}"
-            Modifiers="Control" />
-    </ui:FluentWindow.InputBindings>
+    <!-- <ui:FluentWindow.InputBindings> -->
+    <!--     <KeyBinding -->
+    <!--         Key="F" -->
+    <!--         Command="{Binding ElementName=AutoSuggestBox, Path=FocusCommand}" -->
+    <!--         Modifiers="Control" /> -->
+    <!-- </ui:FluentWindow.InputBindings> -->
 
     <Grid>
         <ui:TitleBar
@@ -48,21 +48,21 @@
             IsBackButtonVisible="Visible"
             IsPaneToggleVisible="True"
             MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
-            OpenPaneLength="310"
+            OpenPaneLength="250"
             PaneDisplayMode="Left"
             TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}">
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar x:Name="BreadcrumbBar" Margin="42,32,42,20" />
             </ui:NavigationView.Header>
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox x:Name="AutoSuggestBox" PlaceholderText="Search">
-                    <ui:AutoSuggestBox.Icon>
-                        <ui:IconSourceElement>
-                            <ui:SymbolIconSource Symbol="Search24" />
-                        </ui:IconSourceElement>
-                    </ui:AutoSuggestBox.Icon>
-                </ui:AutoSuggestBox>
-            </ui:NavigationView.AutoSuggestBox>
+            <!-- <ui:NavigationView.AutoSuggestBox> -->
+            <!--     <ui:AutoSuggestBox x:Name="AutoSuggestBox" PlaceholderText="Otsi"> -->
+            <!--         <ui:AutoSuggestBox.Icon> -->
+            <!--             <ui:IconSourceElement> -->
+            <!--                 <ui:SymbolIconSource Symbol="Search24" /> -->
+            <!--             </ui:IconSourceElement> -->
+            <!--         </ui:AutoSuggestBox.Icon> -->
+            <!--     </ui:AutoSuggestBox> -->
+            <!-- </ui:NavigationView.AutoSuggestBox> -->
             <ui:NavigationView.ContentOverlay>
                 <Grid>
                     <ui:SnackbarPresenter x:Name="SnackbarPresenter" />

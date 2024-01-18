@@ -21,6 +21,9 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <helpers:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
+        <helpers:NullOrEmptyStringImageConverter x:Key="NullOrEmptyStringImageConverter" />
+        <helpers:StringToDecimalConverter x:Key="StringToDecimalConverter" />
+        <BitmapImage x:Key="DefaultImage" UriSource="../../Assets/image-file-256.png" />
     </Page.Resources>
     <Grid>
         <ui:LoadingScreen 
@@ -33,7 +36,7 @@
             <ui:AutoSuggestBox
                 x:Name="AutoSuggestBox"
                 Icon="{ui:SymbolIcon Search24}"
-                PlaceholderText="Search..."
+                PlaceholderText="Otsi..."
                 IsEnabled="{Binding ViewModel.IsReady}"
                 OriginalItemsSource="{Binding ViewModel.SearchNames, Mode=OneWay}">
                 <ui:AutoSuggestBox.ItemTemplate>
@@ -48,17 +51,35 @@
                         <b:InvokeCommandAction Command="{Binding ViewModel.SearchCommand}"
                                                CommandParameter="{Binding ElementName=AutoSuggestBox, Path=Text}" />
                     </b:EventTrigger>
+                    <b:EventTrigger EventName="SuggestionChosen">
+                        <b:InvokeCommandAction Command="{Binding ViewModel.SearchCommand}"
+                                               CommandParameter="{Binding ElementName=AutoSuggestBox, Path=Text}" />
+                    </b:EventTrigger>
                 </b:Interaction.Triggers>
             </ui:AutoSuggestBox>
-            <ui:DataGrid Grid.Row="1" AutoGenerateColumns="False"
+            <ui:DataGrid Grid.Row="1" 
+                         AutoGenerateColumns="False"
                          MaxWidth="2560"
                          MaxHeight="1600"
                          EnableColumnVirtualization="True"
-                         EnableRowVirtualization="True"
-                         ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}">
+                         EnableRowVirtualization="True" SelectionMode="Single" PreviewKeyDown="DataGrid_OnPreviewKeyDown"
+                         ItemsSource="{Binding ViewModel.ProductList, Mode=OneWay}">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{ui:ThemeResource AccentTextFillColorPrimaryBrush}" />
+                                <Setter Property="Foreground"
+                                        Value="{ui:ThemeResource TextFillColorInverseBrush}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
                 <ui:DataGrid.Columns>
-                    <DataGridTextColumn Header="Code" Binding="{Binding Code}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Name"
+                    <DataGridTextColumn Header="Kood" Binding="{Binding Code}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Nimetus"
                                         MaxWidth="600"
                                         Binding="{Binding Name_est}" IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
@@ -67,14 +88,35 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Price" Binding="{Binding RoundedNetoPrice}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="SPrice" Binding="{Binding RoundedSpecialNetoPrice}" IsReadOnly="True" />
-                    <DataGridTemplateColumn Header="Link">
+                    <DataGridTextColumn Header="Hind" Binding="{Binding Price_neto, Converter={StaticResource StringToDecimalConverter}}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Erihind" Binding="{Binding Special_price_neto, Converter={StaticResource StringToDecimalConverter}}" IsReadOnly="True">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Special_price_neto}" 
+                                                 Value="">
+                                        <Setter Property="Foreground" Value="{ui:ThemeResource SystemFillColorCriticalBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Tooteleht" CanUserSort="False">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ui:HyperlinkButton Icon="{ui:SymbolIcon ShoppingBagArrowLeft24}"
                                                     Content="Poodi"
                                                     NavigateUri="{Binding Link}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Pilt" CanUserSort="False">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ui:Image 
+                                    Height="60" Width="80" CornerRadius="8"
+                                    Source="{Binding Image, Converter={StaticResource NullOrEmptyStringImageConverter},FallbackValue={StaticResource DefaultImage},
+                                TargetNullValue={StaticResource DefaultImage}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

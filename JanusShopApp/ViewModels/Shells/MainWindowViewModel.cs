@@ -6,25 +6,25 @@
 using System.Collections.ObjectModel;
 using Wpf.Ui.Controls;
 
-namespace JanusShopApp.ViewModels.Windows
+namespace JanusShopApp.ViewModels.Shells
 {
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _applicationTitle = "WPF UI - JanusShopApp";
+        private string _applicationTitle = "Shop Aggregator";
 
         [ObservableProperty]
         private ObservableCollection<object> _menuItems = new()
         {
+            // new NavigationViewItem()
+            // {
+            //     Content = "Home",
+            //     Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
+            //     TargetPageType = typeof(Views.Pages.DashboardPage)
+            // },
             new NavigationViewItem()
             {
-                Content = "Home",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
-                TargetPageType = typeof(Views.Pages.DashboardPage)
-            },
-            new NavigationViewItem()
-            {
-                Content = "Data",
+                Content = "YEInt",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
                 TargetPageType = typeof(Views.Pages.DataPage)
             }
@@ -35,7 +35,7 @@ namespace JanusShopApp.ViewModels.Windows
         {
             new NavigationViewItem()
             {
-                Content = "Settings",
+                Content = "Sätted",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
                 TargetPageType = typeof(Views.Pages.SettingsPage)
             }
@@ -44,7 +44,7 @@ namespace JanusShopApp.ViewModels.Windows
         [ObservableProperty]
         private ObservableCollection<MenuItem> _trayMenuItems = new()
         {
-            new MenuItem { Header = "Home", Tag = "tray_home" }
+            // new MenuItem { Header = "Home", Tag = "tray_home" }
         };
     }
 }
