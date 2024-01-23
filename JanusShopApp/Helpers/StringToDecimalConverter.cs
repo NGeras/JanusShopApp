@@ -9,7 +9,7 @@ public class StringToDecimalConverter : IValueConverter
     {
         var priceString = (string)value;
         // Convert the original string price to decimal for rounding
-        if (decimal.TryParse(priceString, out decimal neto))
+        if (decimal.TryParse(priceString, CultureInfo.InvariantCulture, out decimal neto))
         {
             // Round to desired decimal places
             return $"{Math.Round(neto, 2)}€";
