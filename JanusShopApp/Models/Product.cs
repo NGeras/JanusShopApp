@@ -55,7 +55,7 @@ public class Product {
 
     public override string ToString()
     {
-        return $"{Code} {Name_est} {Type}";
+        return $"{Code} {Purchaser} {Name_est} {Type}";
     }
 
     [XmlRoot(ElementName = "root")]

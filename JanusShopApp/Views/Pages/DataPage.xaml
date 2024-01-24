@@ -101,6 +101,7 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
+                    <DataGridTextColumn Header="Kaubamark" Binding="{Binding Purchaser}" IsReadOnly="True" />
                     <DataGridTemplateColumn Header="Tooteleht" CanUserSort="False">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

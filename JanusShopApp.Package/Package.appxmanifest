@@ -9,7 +9,7 @@
   <Identity
     Name="a67019b1-4a57-496e-ba5c-5cc654a578a5"
     Publisher="CN=Bait Partner OÜ, O=Bait Partner OÜ, L=Tallinn, C=EE"
-    Version="1.0.2.0" />
+    Version="1.0.5.0" />
 
   <Properties>
     <DisplayName>JanusShopApp.Package</DisplayName>
